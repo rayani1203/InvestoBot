@@ -1,14 +1,28 @@
-import React from "react";
+import React, {useEffect} from "react";
 import './Login.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import {Navigate, Link} from 'react-router-dom'
 
 function Login(){
-    function switchAuth(){
-        console.log( window.localStorage.getItem("authenticated"));
-        window.localStorage.setItem("authenticated", true);
-        <Navigate to='/'></Navigate>
+    let [dummy, setDummy] = React.useState();
+    async function authenticate(){
+        const username = document.getElementById('username').value;
+        const userPass = document.getElementById('password').value;
+        await fetch(`http://localhost:5001/users/getuser/${username}`).then((response) => response.json()).then(
+            (data) => data.password).then((password) => comparePassword(userPass, password)).then(setDummy());
     }
+
+    function comparePassword(userPass, password) {
+        console.log(userPass, password);
+        if(userPass == password){
+            window.localStorage.setItem("authenticated", true);
+        }
+    }
+
+    useEffect(() => {
+        console.log(window.localStorage.getItem("authenticated"));
+    }, [dummy]);
+
     let auth;
     if(window.localStorage.getItem("authenticated") == "true") {
         auth = true;
@@ -27,28 +41,34 @@ function Login(){
             <div class="col-lg-6">
               <div class="card-body">
                 <div class="text-center">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/lotus.webp"
-                    style={{width: "185px"}} alt="logo"/>
+                  <img src="https://cdn-icons-png.flaticon.com/512/3345/3345031.png"
+                    style={{width: "150px", marginBottom: "15px"}} alt="logo"/>
                   <h4 class="mt-1 mb-5 pb-1">Welcome to InvestoBot!</h4>
                 </div>
                 <form>
-                  <p>Please login to your account</p>
+                  <p>Please log in to your account</p>
 
                   <div class="form-outline mb-4">
-                    <input type="email" id="form2Example11" class="form-control"
-                      placeholder="Phone number or email address" />
+                    <input type="text" id="username" class="form-control" placeholder="Username" />
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" id="form2Example22" class="form-control" placeholder="Password" />
+                    <input type="password" id="password" class="form-control" placeholder="Password" />
                   </div>
 
-                  <div class="text-center d-inline-block pt-1 mb-5 pb-1">
-                    <Link onClick={switchAuth} to='/' class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 w-100" type="button">Log
+                  <div class="form-outline mb-4">
+                    <input type="email" id="email" class="form-control"
+                      placeholder="Email address" />
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <input type="text" id="name" class="form-control"
+                      placeholder="Full name" />
+                  </div>
+
+                  <div class="text-center d-inline-block pt-1 pb-1">
+                    <Link onClick={authenticate} to='/' class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 w-100" type="button" style={{minWidth:"100px"}}>Log
                       in</Link>
-                    <div>
-                    <a class="text-muted" href="#!">Forgot password?</a>
-                    </div>
                   </div>
 
                   <div class="d-flex align-items-center justify-content-center pb-4">

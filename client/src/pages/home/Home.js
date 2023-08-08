@@ -18,7 +18,6 @@ function Home (){
   }
   useEffect(() => {
     window.localStorage.setItem('authenticated', auth);
-    console.log(window.localStorage.getItem('authenticated'));
   }, [auth]);
     return (
         <>
