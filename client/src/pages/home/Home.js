@@ -13,7 +13,6 @@ function Home (){
     }
     let [auth, setAuth] = React.useState(currAuth());
   function swapAuth(){
-    console.log(auth);
     setAuth((prevAuth) => !prevAuth);
   }
   useEffect(() => {

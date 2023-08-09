@@ -1,34 +1,37 @@
-import React, {useEffect} from "react";
+import React from "react";
 import './Login.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import {Navigate, Link} from 'react-router-dom'
+import ConditionalLink from '../../components/ConditionalLink'
 
 function Login(){
-    let [dummy, setDummy] = React.useState();
-    async function authenticate(){
-        const username = document.getElementById('username').value;
-        const userPass = document.getElementById('password').value;
-        await fetch(`http://localhost:5001/users/getuser/${username}`).then((response) => response.json()).then(
-            (data) => data.password).then((password) => comparePassword(userPass, password)).then(setDummy());
+    let [auth] = React.useState(determineAuth());
+    let [user, setUser] = React.useState({username: '', password: ''});
+
+    function handleChange(event){
+        if(event.target.id == 'username'){
+        setUser(user => ({
+            ...user,
+            username: event.target.value
+        })
+        )
+    } else if(event.target.id == 'password'){
+        setUser(user => ({
+            ...user,
+            password: event.target.value
+        })
+        )
+    }
     }
 
-    function comparePassword(userPass, password) {
-        console.log(userPass, password);
-        if(userPass == password){
-            window.localStorage.setItem("authenticated", true);
-        }
+    function determineAuth(){
+        if(window.localStorage.getItem("authenticated") == "true") {
+            return true;
+        } else {
+            return false;
+        };
     }
-
-    useEffect(() => {
-        console.log(window.localStorage.getItem("authenticated"));
-    }, [dummy]);
-
-    let auth;
-    if(window.localStorage.getItem("authenticated") == "true") {
-        auth = true;
-    } else {
-        auth = false;
-    };
+    
     return (
         <>
         {auth && <Navigate to='/'></Navigate>}
@@ -49,26 +52,15 @@ function Login(){
                   <p>Please log in to your account</p>
 
                   <div class="form-outline mb-4">
-                    <input type="text" id="username" class="form-control" placeholder="Username" />
+                    <input type="text" id="username" class="form-control" placeholder="Username" onChange={handleChange}/>
                   </div>
 
                   <div class="form-outline mb-4">
-                    <input type="password" id="password" class="form-control" placeholder="Password" />
-                  </div>
-
-                  <div class="form-outline mb-4">
-                    <input type="email" id="email" class="form-control"
-                      placeholder="Email address" />
-                  </div>
-
-                  <div class="form-outline mb-4">
-                    <input type="text" id="name" class="form-control"
-                      placeholder="Full name" />
+                    <input type="password" id="password" class="form-control" placeholder="Password" onChange={handleChange}/>
                   </div>
 
                   <div class="text-center d-inline-block pt-1 pb-1">
-                    <Link onClick={authenticate} to='/' class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 w-100" type="button" style={{minWidth:"100px"}}>Log
-                      in</Link>
+                    <ConditionalLink userPass={user.password} username={user.username}></ConditionalLink>
                   </div>
 
                   <div class="d-flex align-items-center justify-content-center pb-4">
