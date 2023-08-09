@@ -7,6 +7,7 @@ import ConditionalLink from '../../components/ConditionalLink'
 function Login(){
     let [auth] = React.useState(determineAuth());
     let [user, setUser] = React.useState({username: '', password: ''});
+    let [error, setError] = React.useState(false);
 
     function handleChange(event){
         if(event.target.id == 'username'){
@@ -48,6 +49,9 @@ function Login(){
                     style={{width: "150px", marginBottom: "15px"}} alt="logo"/>
                   <h4 class="mt-1 mb-5 pb-1">Welcome to InvestoBot!</h4>
                 </div>
+                {error && <div class="alert alert-danger" role="alert">
+                Invalid username or password :(
+                </div>}
                 <form>
                   <p>Please log in to your account</p>
 
@@ -60,7 +64,7 @@ function Login(){
                   </div>
 
                   <div class="text-center d-inline-block pt-1 pb-1">
-                    <ConditionalLink userPass={user.password} username={user.username}></ConditionalLink>
+                    <ConditionalLink state = {setError}userPass={user.password} username={user.username}></ConditionalLink>
                   </div>
 
                   <div class="d-flex align-items-center justify-content-center pb-4">

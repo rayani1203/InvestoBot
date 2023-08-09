@@ -24,7 +24,7 @@ function Home (){
         <div className="Home-container">
             This is homepage
         </div>
-        <button onClick={swapAuth}>Swap Auth</button>   
+        <button onClick={swapAuth}>Sign Out</button>   
         </>
     )
 }

@@ -37,6 +37,7 @@ async function fetchData(){
             } else {
                 window.localStorage.setItem("authenticated", false);
                 setAuth(false);
+                props.state(true);
             }
     }
 }
