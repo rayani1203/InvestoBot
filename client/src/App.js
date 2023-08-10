@@ -1,13 +1,15 @@
 import './App.css';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Login from './pages/login/Login.js';
 import Home from './pages/home/Home.js';
 import Signup from './pages/signup/Signup.js';
+import Investments from './pages/investments/Investments.js';
+import Manage from './pages/manage/Manage.js';
+import Portfolio from './pages/portfolio/Portfolio.js';
 import {
   BrowserRouter,
   Route,
-  Routes,
-  Navigate
+  Routes
 } from "react-router-dom";
 
 
@@ -19,7 +21,9 @@ function App() {
       <Route path="/login" Component={Login}/>
       <Route path="/" Component={Home}/>
       <Route path="/signup" Component={Signup}/>
-      
+      <Route path="/investments" Component={Investments}/>
+      <Route path="/manage" Component={Manage}/>
+      <Route path="/portfolio" Component={Portfolio}/>
     </Routes>
     </BrowserRouter>
     </>

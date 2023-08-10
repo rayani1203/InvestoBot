@@ -1,5 +1,7 @@
-import React, {useEffect, useMemo} from "react";
+import React from "react";
 import { Navigate } from "react-router-dom";
+import Navbar from '../../components/Navbar'
+import './Home.css'
 
 function Home (){
     function currAuth(){
@@ -11,20 +13,17 @@ function Home (){
             return false;
         }
     }
-    let [auth, setAuth] = React.useState(currAuth());
-  function swapAuth(){
-    setAuth((prevAuth) => !prevAuth);
-  }
-  useEffect(() => {
-    window.localStorage.setItem('authenticated', auth);
-  }, [auth]);
+    let [auth] = React.useState(currAuth());
+//   function swapAuth(){
+//     setAuth((prevAuth) => !prevAuth);
+//   }
+//   useEffect(() => {
+//     window.localStorage.setItem('authenticated', auth);
+//   }, [auth]);
     return (
         <>
         {!auth && <Navigate to='./login'></Navigate>}
-        <div className="Home-container">
-            This is homepage
-        </div>
-        <button onClick={swapAuth}>Sign Out</button>   
+        <Navbar/>
         </>
     )
 }
