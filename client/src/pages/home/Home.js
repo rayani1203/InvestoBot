@@ -5,12 +5,12 @@ import './Home.css'
 
 function Home (){
     function currAuth(){
-        const value = window.localStorage.getItem("authenticated");
-        if (value == "true") {
+        const value = Number(window.localStorage.getItem("authenticated"));
+        if (value > 0) {
             console.log("Authenticated");
-            return true;
+            return value;
         } else {
-            return false;
+            return 0;
         }
     }
     let [auth] = React.useState(currAuth());
@@ -22,7 +22,7 @@ function Home (){
 //   }, [auth]);
     return (
         <>
-        {!auth && <Navigate to='./login'></Navigate>}
+        {(auth==0) && <Navigate to='./login'></Navigate>}
         <Navbar/>
         </>
     )

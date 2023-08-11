@@ -15,6 +15,21 @@ app.get('/users', async (req, res) => {
     }
 })
 
+app.post('/users/wallet/', async (req, res) => {
+    try{
+        const {id, add,amount} = req.body;
+        if(Boolean(add)){
+            const newWallet = await pool.query(`UPDATE login SET wallet = wallet + ${amount} WHERE user_id = ${id} RETURNING *`);
+            res.json(newWallet.rows);
+        } else {
+            const newWallet = await pool.query(`UPDATE login SET wallet = wallet - ${amount} WHERE user_id = ${id} RETURNING *`);
+            res.json(newWallet.rows);
+        }
+    }catch(e){
+        console.error(e.message);
+    }
+})
+
 app.post('/users', async (req, res) => {
     try{
         let {username, password, email, name} = req.body;
@@ -60,9 +75,13 @@ app.get('/users/getid/:id', async (req, res) => {
         if(info.rowCount > 0){
         const password = info.rows[0].password?info.rows[0].password:null;
         const username = info.rows[0].username?info.rows[0].username:null;
+        const wallet = info.rows[0].wallet;
+        const assets = info.rows[0].assets;
         res.json({
             password: password,
-            username: username
+            username: username,
+            wallet: wallet,
+            assets: assets
         });
         }
         res.json();

@@ -3,21 +3,22 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {Navigate} from 'react-router-dom'
 
 function ConditionalLink(props){
-    let [password, setPassword] = React.useState('');
-    let [auth, setAuth] = React.useState(false);
+    let [user, setUser] = React.useState({password: '', id: 0});
+    let [auth, setAuth] = React.useState(0);
     useEffect(() => {
     fetchData();
+    console.log(props.username);
 }, [props.username]);
 async function fetchData(){
     try{
-    const response = await fetch(`http://localhost:5001/users/getuser/${props.username}`).then((response) => response.json()).then((data) => data.password).then((password) => setPassword(password));
+    const response = await fetch(`http://localhost:5001/users/getuser/${props.username}`).then((response) => response.json()).then((data) => setUser({password:data.password, id:data.id}));
     return response;
     } catch(err){
         console.error(err);
     }
 }
 
-    if(auth){
+    if(auth>0){
         return(
             <Navigate to='/' class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3 w-100" type="button" style={{minWidth:"100px"}}>Log
                 in</Navigate>
@@ -30,13 +31,13 @@ async function fetchData(){
     }
 
     function authenticate(){
-        if(password == props.userPass && password != ''){
-            console.log(password, props.userPass);
-            window.localStorage.setItem("authenticated", true);
-            setAuth(true);
+        if(user.password == props.userPass && user.password != ''){
+            console.log(user.password, props.userPass);
+            window.localStorage.setItem("authenticated", user.id);
+            setAuth(user.id);
             } else {
-                window.localStorage.setItem("authenticated", false);
-                setAuth(false);
+                window.localStorage.setItem("authenticated", 0);
+                setAuth(0);
                 props.state(true);
             }
     }

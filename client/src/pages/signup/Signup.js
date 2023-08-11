@@ -3,7 +3,7 @@ import { Navigate, Link } from 'react-router-dom';
 import ConditionalSign from '../../components/ConditionalSign';
 
 function Signup(){
-    let [auth, setAuth] = React.useState(determineAuth());
+    let [auth] = React.useState(determineAuth());
     let [user, setUser] = React.useState({username: '', password: '', email: '', name: ''});
     let [error, setError] = React.useState(false);
 
@@ -16,15 +16,15 @@ function Signup(){
     }
 
     function determineAuth(){
-        if(window.localStorage.getItem("authenticated") == "true") {
-            return true;
+        if(Number(window.localStorage.getItem("authenticated")) > 0) {
+            return Number(window.localStorage.getItem("authenticated"));
         } else {
-            return false;
+            return 0;
         };
     }
     return (
         <>
-        {auth && <Navigate to='/'></Navigate>}
+        {(auth>0) && <Navigate to='/'></Navigate>}
         <section className="h-100 gradient-form" style={{backgroundColor: "#eee"}}>
   <div className="container py-5 h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">
