@@ -3,8 +3,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "bootstrap";
 import { Navigate } from "react-router-dom";
 
-function Navbar(){
+function Navbar(props){
     let [wallet, setWallet] = React.useState({wallet:0.0, assets:0.0});
+    // let [dummy, setDummy] = React.useState(0);
+    // useEffect(() => {
+    //     setDummy((dummy) => dummy + 1)
+    // }, [props.dummy]);
     async function fetchWallet(){
         let id = Number(window.localStorage.getItem("authenticated"));
         try{
@@ -17,9 +21,7 @@ function Navbar(){
 
     function currAuth(){
         const value = Number(window.localStorage.getItem("authenticated"));
-        console.log(value);
         if (value > 0) {
-            console.log("Authenticated");
             return value;
         } else {
             return 0;
@@ -39,7 +41,6 @@ function Navbar(){
   }
   useEffect(() => {
     let currentLinks = document.querySelectorAll(`a[href="${window.location.pathname}"]`);
-    console.log(window.location.pathname);
     currentLinks.forEach(link => link.className += ' active');
     if(auth>0){
     fetchWallet().then((res) => setWallet({
@@ -47,7 +48,7 @@ function Navbar(){
         assets: res.assets
     }));
 }
-  }, []);
+  }, [props.dummy]);
 
   async function updateWallet(add){
     let value = 0;
@@ -88,17 +89,14 @@ function Navbar(){
         <a class="nav-link" href="/">Home</a>
       </li>
       <li class="nav-item" style={liStyle}>
-        <a class="nav-link" href="/investments">View</a>
-      </li>
-      <li class="nav-item" style={liStyle}>
-        <a class="nav-link" href="/manage">Manage</a>
+        <a class="nav-link" href="/investments">Investments</a>
       </li>
       <li class="nav-item" style={liStyle}>
         <a class="nav-link" href="/portfolio">Portfolio</a>
       </li>
     </ul>
     <div class="my-2 my-sm-0 ms-auto me-4" style={{display:"flex"}}>
-        <span>
+        <span class="me-5 my-auto" style={{color:"white", fontWeight:"600"}}>
             Assets: ${Number(wallet.assets).toFixed(2)}
         </span>
         <div class="dropdown me-5">

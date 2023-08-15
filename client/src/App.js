@@ -4,7 +4,6 @@ import Login from './pages/login/Login.js';
 import Home from './pages/home/Home.js';
 import Signup from './pages/signup/Signup.js';
 import Investments from './pages/investments/Investments.js';
-import Manage from './pages/manage/Manage.js';
 import Portfolio from './pages/portfolio/Portfolio.js';
 import {
   BrowserRouter,
@@ -22,7 +21,6 @@ function App() {
       <Route path="/" Component={Home}/>
       <Route path="/signup" Component={Signup}/>
       <Route path="/investments" Component={Investments}/>
-      <Route path="/manage" Component={Manage}/>
       <Route path="/portfolio" Component={Portfolio}/>
     </Routes>
     </BrowserRouter>

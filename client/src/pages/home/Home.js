@@ -7,7 +7,6 @@ function Home (){
     function currAuth(){
         const value = Number(window.localStorage.getItem("authenticated"));
         if (value > 0) {
-            console.log("Authenticated");
             return value;
         } else {
             return 0;
