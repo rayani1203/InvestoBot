@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
 
 function NewInvest(props){
-    console.log(props);
     let [error, setError] = React.useState(false);
     let [success, setSuccess] = React.useState(false);
     const [startDate, setStartDate] = useState(new Date());
@@ -88,7 +87,7 @@ function NewInvest(props){
     }
 
     return (
-        <div style={{backgroundColor:"#EEEEEE",borderRadius:"15px"}} class="m-3 p-1 mb-5">
+        <div style={{backgroundColor:"#EEEEEE",borderRadius:"15px"}} class="m-3 p-1 mb-0">
             {error && <div class="alert alert-danger" role="alert">
                 Insufficient or incorrect data provided to the fields. Please review the provided information and try again!
                 </div>}
@@ -108,7 +107,7 @@ function NewInvest(props){
             </div>
 
             <div class="mb-2 me-sm-2 col">
-                <input type="text" class="form-control" id="price" placeholder="Price"/>
+                <input type="text" class="form-control" id="price" placeholder="Price" disabled/>
                 <button class="btn btn-info mx-auto mt-2" onClick={getPrice}>Get Price</button>
             </div>
 
