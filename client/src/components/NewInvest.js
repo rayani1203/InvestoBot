@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import DatePicker from "react-datepicker";
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
+import {API_KEY} from '../env';
 
 function NewInvest(props){
     let [error, setError] = React.useState(false);
@@ -27,7 +28,7 @@ function NewInvest(props){
             user_id: user_id
         }
         try{
-            const valid = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${date}?apiKey=IiIcEpGbpJmYzVXvJiJIKJnZOGjvIBtJ`).then((res) => res.json());
+            const valid = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${date}?apiKey=${API_KEY}`).then((res) => res.json());
             if(valid.status == 'OK'){
             await fetch('http://localhost:5001/investments', {
                 method: 'POST',
@@ -70,7 +71,7 @@ function NewInvest(props){
         const ticker = document.getElementById('ticker').value.toUpperCase();
         const date = startDate.toISOString().split('T')[0];
         try{
-            const price = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${date}?apiKey=IiIcEpGbpJmYzVXvJiJIKJnZOGjvIBtJ`).then((res) => res.json()).then((data) => data.close);
+            const price = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${date}?apiKey=${API_KEY}`).then((res) => res.json()).then((data) => data.close);
             if(price){
             document.getElementById('price').value = price;
             setError(false);

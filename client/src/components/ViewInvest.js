@@ -1,5 +1,6 @@
 import React, {useEffect} from "react";
 import './styles/style.css';
+import {API_KEY} from '../env';
 
 function ViewInvest(props){
     const {ticker, quantity, date, price} = props;
@@ -10,7 +11,7 @@ function ViewInvest(props){
         console.log(yesterday);
         console.log(yesterday.toISOString().split('T')[0]);
         try{
-            const price = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${yesterday.toISOString().split('T')[0]}?apiKey=IiIcEpGbpJmYzVXvJiJIKJnZOGjvIBtJ`).then((res) => res.json()).then((data) => data.close);
+            const price = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${yesterday.toISOString().split('T')[0]}?apiKey=${API_KEY}`).then((res) => res.json()).then((data) => data.close);
             return price;
         } catch(e){
             console.error(e.message);
