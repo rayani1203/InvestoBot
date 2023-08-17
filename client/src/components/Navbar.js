@@ -4,7 +4,7 @@ import "bootstrap";
 import { Navigate } from "react-router-dom";
 
 function Navbar(props){
-    let [wallet, setWallet] = React.useState({wallet:0.0, assets:0.0});
+    let [wallet, setWallet] = React.useState({wallet:0.0});
     // let [dummy, setDummy] = React.useState(0);
     // useEffect(() => {
     //     setDummy((dummy) => dummy + 1)
@@ -44,8 +44,7 @@ function Navbar(props){
     currentLinks.forEach(link => link.className += ' active');
     if(auth>0){
     fetchWallet().then((res) => setWallet({
-        wallet: res.wallet,
-        assets: res.assets
+        wallet: res.wallet
     }));
 }
   }, [props.dummy]);
@@ -96,21 +95,21 @@ function Navbar(props){
       </li>
     </ul>
     <div class="my-2 my-sm-0 ms-auto me-4" style={{display:"flex"}}>
-        <span class="me-5 my-auto" style={{color:"white", fontWeight:"600"}}>
+        {/* <span class="me-5 my-auto" style={{color:"white", fontWeight:"600"}}>
             Assets: ${Number(wallet.assets).toFixed(2)}
-        </span>
+        </span> */}
         <div class="dropdown me-5">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Wallet: ${Number(wallet.wallet).toFixed(2)}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <form class="form-inline mb-4">
+            <form class="form-inline mb-4 mx-2">
                 <input class="form-control mr-sm-2" id="add" type="number" aria-label="Search"/>
-                <button onClick={()=>{updateWallet(true)}} class="btn btn-sm btn-outline-success my-sm-0">Add Amount</button>
+                <button onClick={()=>{updateWallet(true)}} class="btn btn-sm btn-outline-success mt-1">Add Amount</button>
             </form>
-            <form class="form-inline">
+            <form class="form-inline mx-2">
                 <input class="form-control mr-sm-2" id="subtract" type="number" aria-label="Search"/>
-                <button onClick={()=>{updateWallet(false)}} class="btn btn-sm btn-outline-danger my-sm-0" type="submit">Subtract Amount</button>
+                <button onClick={()=>{updateWallet(false)}} class="btn btn-sm btn-outline-danger mt-1" type="submit">Subtract Amount</button>
             </form>
             
         </div>

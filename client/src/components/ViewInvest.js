@@ -18,7 +18,10 @@ function ViewInvest(props){
         }
     }
     useEffect(() => {
-        fetchPrice().then((price) => setPrice(price));
+        fetchPrice().then((price) => {
+            setPrice(price);
+            props.assets((prev) => prev + price*quantity);
+        })
     }, []);
     useEffect(()=>{
         setProfit(((currPrice/price - 1)*100).toFixed(1));
@@ -55,6 +58,7 @@ function ViewInvest(props){
                 })
             });
             props.state((prev) => prev+1);
+            props.assets((prev) => prev-(currPrice*quantity));
         } catch(e){
             console.error(e.message);
         }
@@ -66,8 +70,8 @@ function ViewInvest(props){
             <th scope="row">{ticker}</th>
             <td>{quantity}</td>
             <td>{date}</td>
-            <td>{price}</td>
-            <td id="currPrice">{currPrice}</td>
+            <td>${price}</td>
+            <td id="currPrice">${currPrice}</td>
             <td id={"profit" + props.index}>{profit}% {(profit > 0) && <FaArrowUp/>} {(profit < 0) && <FaArrowDown/>} </td>
             <td><button onClick={sell} class="btn btn-danger">Sell</button></td>
         </tr>

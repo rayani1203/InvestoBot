@@ -45,6 +45,16 @@ app.put('/users/assets', async (req, res) => {
     }
 })
 
+app.post('/user/assets', async (req, res) => {
+    try{
+        const {id, amount} = req.body;
+        const updateAsset = await pool.query(`UPDATE login SET assets = ${amount} WHERE user_id = ${id} RETURNING *`);
+        res.json(newAsset.rows);
+    } catch(e){
+        console.error(e.message);
+    }
+});
+
 app.post('/users', async (req, res) => {
     try{
         let {username, password, email, name} = req.body;
