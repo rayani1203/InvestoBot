@@ -52,7 +52,7 @@ function NewInvest(props){
                     add: true,
                     amount: quantity*price
                 })
-            })
+            });
             setError(false);
             setSuccess(true);
             props.state((prev) => prev+1);

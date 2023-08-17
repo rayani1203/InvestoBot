@@ -67,8 +67,8 @@ function Investments(){
                                 </tr>
                               </thead>
                               <tbody>
-                                {investments.map(investment =>{
-                                    return (<ViewInvest ticker = {investment.ticker} quantity={investment.quantity} date={investment.date.split('T')[0]} price={investment.price}/>)
+                                {investments.map((investment, i) =>{
+                                    return (<ViewInvest state = {setDummy} user_id={auth} index = {i} id={investment.invest_id} ticker = {investment.ticker} quantity={investment.quantity} date={investment.date.split('T')[0]} price={investment.price}/>)
                                 })}
                             </tbody>
                             </table>
