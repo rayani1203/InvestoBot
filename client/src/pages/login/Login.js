@@ -35,7 +35,7 @@ function Login(){
     
     return (
         <>
-        {(auth>0) && <Navigate to='/'></Navigate>}
+        {(auth>0) && <Navigate to='/investments'></Navigate>}
         <section className="h-100 gradient-form" style={{backgroundColor: "#eee"}}>
   <div className="container py-5 h-100">
     <div className="row d-flex justify-content-center align-items-center h-100">

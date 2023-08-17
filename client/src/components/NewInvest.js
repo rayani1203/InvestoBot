@@ -30,6 +30,9 @@ function NewInvest(props){
         try{
             const valid = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${date}?apiKey=${API_KEY}`).then((res) => res.json());
             if(valid.status == 'OK'){
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 2);
+                const currPrice = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${yesterday.toISOString().split('T')[0]}?apiKey=${API_KEY}`).then((res) => res.json()).then((data) => data.close);
             await fetch('http://localhost:5001/investments', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -50,7 +53,7 @@ function NewInvest(props){
                 body: JSON.stringify({
                     id: user_id,
                     add: true,
-                    amount: quantity*price
+                    amount: quantity*currPrice
                 })
             });
             setError(false);

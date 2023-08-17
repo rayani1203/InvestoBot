@@ -10,8 +10,6 @@ function ViewInvest(props){
     async function fetchPrice(){
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 2);
-        console.log(yesterday);
-        console.log(yesterday.toISOString().split('T')[0]);
         try{
             const price = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${yesterday.toISOString().split('T')[0]}?apiKey=${API_KEY}`).then((res) => res.json()).then((data) => data.close);
             return price;

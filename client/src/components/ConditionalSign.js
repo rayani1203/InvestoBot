@@ -11,12 +11,16 @@ async function postData(userInfo){
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(userInfo)
     }).then((data)=> data.json());
-    return response.id;
+    return response[0].user_id;
     } catch(err){
         console.error(err);
         return 0;
     }
 }
+
+// React.useEffect(() =>{
+//     console.log(auth);
+// }, [auth]);
 
     if(auth>0){
         return(
@@ -33,8 +37,8 @@ async function postData(userInfo){
         if((Object.values(props.user).every((str) => str != '')) && response){
             window.localStorage.setItem("authenticated", response);
             setAuth(response);
+            props.state(false);
             } else {
-                console.log(props.user);
                 window.localStorage.setItem("authenticated", 0);
                 setAuth(0);
                 props.state(true);

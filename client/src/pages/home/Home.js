@@ -22,6 +22,7 @@ function Home (){
     return (
         <>
         {(auth==0) && <Navigate to='./login'></Navigate>}
+        {(auth>0) && <Navigate to='./investments'></Navigate>}
         <Navbar/>
         </>
     )
