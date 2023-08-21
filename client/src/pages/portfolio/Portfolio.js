@@ -1,11 +1,19 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
+import CollapsibleSold from "../../components/CollapsibleSold";
+import DateRange from "../../components/DateRange";
 
 function Portfolio(){
+    let [date, setDate] = React.useState();
+    let [type, setType] = React.useState('Purchase');
+    React.useEffect(() => {
+        console.log(date);
+    }, [date])
     return (
         <>
         <Navbar/>
-        <h3>This is your portfolio page</h3>
+        <DateRange state={setDate} type ={setType}/>
+        <CollapsibleSold date={date} type={type}/>
         </>
     )
 }

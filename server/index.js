@@ -178,6 +178,56 @@ app.get('/investments/:user_id/:ticker', async (req, res) => {
     }
 })
 
+app.post('/sales', async(req, res) => {
+    const {user_id, ticker, price, quantity, profit, purchase_date, date} = req.body;
+    try{
+        const addSale = await pool.query(`INSERT INTO sales (user_id, ticker, sale_price, quantity, profit, purchase_date, sell_date) VALUES (${user_id}, '${ticker}', ${price}, ${quantity}, ${profit}, '${purchase_date}', '${date}') RETURNING *`);
+        res.json(addSale.rows);
+    } catch(err){
+        console.error(err);
+    }
+})
+
+app.get('/sales', async (req, res) => {
+    const {user_id} = req.params;
+    try{
+        const getSales = await pool.query(`SELECT * FROM sales`);
+        res.json(getSales.rows);
+    } catch(err){
+        console.error(err);
+    }
+})
+
+app.get('/sales/:user_id', async (req, res) => {
+    const {user_id} = req.params;
+    try{
+        const getSales = await pool.query(`SELECT * FROM sales WHERE user_id = ${user_id}`);
+        res.json(getSales.rows);
+    } catch(err){
+        console.error(err);
+    }
+})
+
+app.get('/sales/:user_id/:date/:sell_purchase', async (req, res) => {
+    const {user_id, date, sell_purchase} = req.params;
+    try{
+        const getSales = await pool.query(`SELECT * FROM sales WHERE user_id = ${user_id} AND ${sell_purchase}_date >= '${date}'::date;`);
+        res.json(getSales.rows);
+    } catch(err){
+        console.error(err);
+    }
+})
+
+app.delete('/sales/:sale_id', async (req, res) => {
+    const {sale_id} = req.params;
+    try{
+        const deleteSale = await pool.query(`DELETE FROM sales WHERE sale_id = ${sale_id} RETURNING *`);
+        res.json(deleteSale.rows);
+    } catch(err){
+        console.error(err);
+    }
+})
+
 
 app.listen(5001, () =>{
     console.log('listening on port 5001');
