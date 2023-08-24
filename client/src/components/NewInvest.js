@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import DatePicker from "react-datepicker";
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-datepicker/dist/react-datepicker.css";
-import {API_KEY} from '../env';
+import {API_KEY} from '../env.js';
 
 function NewInvest(props){
     let [error, setError] = React.useState(false);

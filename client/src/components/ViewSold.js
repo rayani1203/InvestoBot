@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import { FaArrowUp, FaArrowDown } from "react-icons/fa";
+import { FaArrowUp, FaArrowDown } from "react-icons/fa/index.esm.js";
 
 function ViewSold(props) {
     const {ticker, quantity, purchase_date, sale_date, purchase_price, sale_price, profit} = props;

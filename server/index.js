@@ -179,9 +179,9 @@ app.get('/investments/:user_id/:ticker', async (req, res) => {
 })
 
 app.post('/sales', async(req, res) => {
-    const {user_id, ticker, price, quantity, profit, purchase_date, date} = req.body;
+    const {user_id, ticker, price, quantity, profit, purchase_date, date, purchase_price} = req.body;
     try{
-        const addSale = await pool.query(`INSERT INTO sales (user_id, ticker, sale_price, quantity, profit, purchase_date, sell_date) VALUES (${user_id}, '${ticker}', ${price}, ${quantity}, ${profit}, '${purchase_date}', '${date}') RETURNING *`);
+        const addSale = await pool.query(`INSERT INTO sales (user_id, ticker, sale_price, quantity, profit, purchase_date, sell_date, purchase_price) VALUES (${user_id}, '${ticker}', ${price}, ${quantity}, ${profit}, '${purchase_date}', '${date}', ${purchase_price}) RETURNING *`);
         res.json(addSale.rows);
     } catch(err){
         console.error(err);
@@ -216,6 +216,40 @@ app.get('/sales/:user_id/:date/:sell_purchase', async (req, res) => {
     } catch(err){
         console.error(err);
     }
+})
+
+app.get('/sales/graph/:user_id/:date/:sell_purchase', async (req, res) => {
+    try{
+    const {user_id, date, sell_purchase} = req.params;
+    let profit = await pool.query(`SELECT SUM(profit) AS profit FROM sales WHERE user_id = ${user_id} AND ${sell_purchase}_date >= '${date}'::date;`);
+    profit = Number(profit.rows[0].profit).toFixed(2);
+    let arr = [profit];
+    const passDate = new Date(date);
+    let today = new Date();
+    let dates= [today.toISOString().split('T')[0]];
+    const days = (today.getTime()-passDate.getTime())/(1000*60*60*24);
+    let period = Math.floor(days);
+    while(Math.floor(days)/period < 10 && period > 1){
+        period /= 2;
+    }
+    period = Math.round(period)
+    let periodDate = new Date();
+    let temp = new Date();
+    temp.setDate(periodDate.getDate() - period);
+    while(periodDate.getTime() > (passDate.getTime()+(1000*60*60*24*1))){
+        const periodInfo = await pool.query(`SELECT SUM(profit) AS profit FROM sales WHERE user_id = ${user_id} AND ${sell_purchase}_date >= '${temp.toISOString().split('T')[0]}'::date AND ${sell_purchase}_date < '${periodDate.toISOString().split('T')[0]}'::date;`)
+        const newProfit = Number(periodInfo.rows[0].profit).toFixed(2);
+        profit = parseFloat(profit) - parseFloat(newProfit);
+        console.log(profit);
+        arr.push(parseFloat(profit).toFixed(2));
+        dates.push(temp.toISOString().split("T")[0]);
+        periodDate.setDate(periodDate.getDate() - period);
+        temp.setDate(temp.getDate() - period);
+    }
+    res.json({arr, dates});
+} catch (e) {
+console.error(e.message);
+}
 })
 
 app.delete('/sales/:sale_id', async (req, res) => {

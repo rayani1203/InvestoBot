@@ -2,7 +2,7 @@ import React from "react";
 import './Login.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import {Navigate, Link} from 'react-router-dom'
-import ConditionalLink from '../../components/ConditionalLink'
+import ConditionalLink from '../../components/ConditionalLink.js'
 
 function Login(){
     let [auth] = React.useState(determineAuth());

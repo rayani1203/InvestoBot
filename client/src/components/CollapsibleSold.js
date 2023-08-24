@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { FaArrowDown } from "react-icons/fa";
 import ViewSold from "./ViewSold.js";
+import ChartComponent from "./ChartComponent.js";
+import {FaArrowDown} from 'react-icons/fa/index.esm.js'
 
 function CollapsibleSold(props){
     let [sales, setSales] = useState([]);
@@ -32,7 +33,14 @@ function CollapsibleSold(props){
     }
     return (
         <>
-        <h1>{net}</h1>
+        <div class="my-5" style={{display: "flex", height:"50vh"}}>
+        <div class="alert alert-info ms-auto me-5 my-auto" style={{width: "20%", textAlign:"center"}} role="alert">
+            <h5 className="m-0">Net value of transactions in this time period: </h5><h3>${net}</h3>
+        </div>
+        <div style={{height: "100%", width: "50%", marginRight: "auto", marginLeft: "10px"}}>
+        <ChartComponent user_id = {window.localStorage.getItem('authenticated')} date={props.date} type={props.type} dummy={props.dummy}/>
+        </div>
+        </div>
         <div class="card">
         <div class="card-header" id="headingOne">
           <h5 class="mb-0">
@@ -64,7 +72,7 @@ function CollapsibleSold(props){
                                 {
                                 sales.map((sale, i)=> {
                                     return(
-                                        <ViewSold ticker={sale.ticker} quantity={sale.quantity} purchase_date={sale.purchase_date} sale_date={sale.sell_date} purchase_price={sale.purchase_price} sale_price={sale.sale_price} profit={sale.profit} />
+                                        <ViewSold index={i} ticker={sale.ticker} quantity={sale.quantity} purchase_date={sale.purchase_date} sale_date={sale.sell_date} purchase_price={sale.purchase_price} sale_price={sale.sale_price} profit={sale.profit} />
                                     )
                                 })
                                 }                            

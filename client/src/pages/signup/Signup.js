@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Link } from 'react-router-dom';
-import ConditionalSign from '../../components/ConditionalSign';
+import ConditionalSign from '../../components/ConditionalSign.js';
 
 function Signup(){
     let [auth] = React.useState(determineAuth());

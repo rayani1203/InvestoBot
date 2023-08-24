@@ -1,10 +1,9 @@
 import React, {useEffect} from "react";
-import Navbar from "../../components/Navbar";
-import NewInvest from "../../components/NewInvest";
+import Navbar from "../../components/Navbar.js";
+import NewInvest from "../../components/NewInvest.js";
 import { Navigate } from "react-router-dom";
-import ViewInvest from "../../components/ViewInvest";
+import ViewInvest from "../../components/ViewInvest.js";
 import '../../components/styles/style.css';
-import { use } from "swup/lib/modules/plugins";
 
 function Investments(){
     let [auth] = React.useState(currAuth());

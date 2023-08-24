@@ -1,14 +1,22 @@
 import React, {useEffect} from "react";
 import './styles/style.css';
-import {API_KEY} from '../env';
-import {FaArrowDown, FaArrowUp} from 'react-icons/fa'
+import {API_KEY} from '../env.js';
+import {FaArrowDown, FaArrowUp} from 'react-icons/fa/index.esm.js'
 
 function ViewInvest(props){
     const {ticker, quantity, date, price} = props;
     const [currPrice, setPrice] = React.useState(0);
     const [profit, setProfit] = React.useState(0);
+    const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 2);
+    console.log(yesterday.getDay());
+    if(yesterday.getDay() == 6){
+        yesterday.setDate(yesterday.getDate() - 1);
+    } else if (yesterday.getDay() == 0){
+        yesterday.setDate(yesterday.getDate() - 2);
+    }
+    console.log(yesterday.getDay());
     async function fetchPrice(){
         try{
             const price = await fetch(`https://api.polygon.io/v1/open-close/${ticker}/${yesterday.toISOString().split('T')[0]}?apiKey=${API_KEY}`).then((res) => res.json()).then((data) => data.close);
@@ -65,10 +73,11 @@ function ViewInvest(props){
                     user_id: props.user_id,
                     ticker: ticker,
                     price: currPrice,
+                    purchase_price: price,
                     quantity: quantity,
                     profit: profit,
                     purchase_date: date,
-                    date: yesterday.toISOString().split('T')[0]
+                    date: today.toISOString().split('T')[0]
                 })
             });
             props.state((prev) => prev+1);
