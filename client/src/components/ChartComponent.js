@@ -46,9 +46,26 @@ function ChartComponent(props){
             plugins: {
                 title: {
                     display: 'true',
-                    text: `Profits since ${props.date?.toLocaleDateString()}`
+                    text: `Profits since ${props.date?.toLocaleDateString()}`,
+                    font:{
+                        size: 18
+                    },
+                    padding:{
+                        bottom: 30
+                    }
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    callbacks: {
+                       label: function(tooltipItem) {
+                              return tooltipItem.yLabel;
+                       }
+                    }
                 }
-            }
+            },
+            responsive: true
         }}/>
     )
 }

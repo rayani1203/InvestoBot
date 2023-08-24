@@ -237,7 +237,7 @@ app.get('/sales/graph/:user_id/:date/:sell_purchase', async (req, res) => {
     let temp = new Date();
     temp.setDate(periodDate.getDate() - period);
     while(periodDate.getTime() > (passDate.getTime()+(1000*60*60*24*1))){
-        const periodInfo = await pool.query(`SELECT SUM(profit) AS profit FROM sales WHERE user_id = ${user_id} AND ${sell_purchase}_date >= '${temp.toISOString().split('T')[0]}'::date AND ${sell_purchase}_date < '${periodDate.toISOString().split('T')[0]}'::date;`)
+        const periodInfo = await pool.query(`SELECT SUM(profit) AS profit FROM sales WHERE user_id = ${user_id} AND ${sell_purchase}_date > '${temp.toISOString().split('T')[0]}'::date AND ${sell_purchase}_date <= '${periodDate.toISOString().split('T')[0]}'::date;`)
         const newProfit = Number(periodInfo.rows[0].profit).toFixed(2);
         profit = parseFloat(profit) - parseFloat(newProfit);
         console.log(profit);

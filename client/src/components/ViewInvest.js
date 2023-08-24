@@ -28,7 +28,9 @@ function ViewInvest(props){
     useEffect(() => {
         fetchPrice().then((price) => {
             setPrice(price);
-            props.assets((prev) => prev + price*quantity);
+            if(props.assets){
+                props.assets(((prev) => prev + price*quantity));
+            }
         })
     }, []);
     useEffect(()=>{
@@ -87,7 +89,15 @@ function ViewInvest(props){
         }
     }
 
-
+    if(props.small){
+        return (
+            <tr>
+                <th scope="row">{ticker}</th>
+                <td id="currPrice">${currPrice}</td>
+                <td id={"profit" + props.index}>{profit}% {(profit > 0) && <FaArrowUp/>} {(profit < 0) && <FaArrowDown/>} </td>
+            </tr>
+        )
+    } else {
     return (
         <tr>
             <th scope="row">{ticker}</th>
@@ -99,6 +109,7 @@ function ViewInvest(props){
             <td><button onClick={sell} class="btn btn-danger">Sell</button></td>
         </tr>
     )
+    }
 }
 
 export default ViewInvest;

@@ -58,7 +58,7 @@ function Investments(){
         <NewInvest user_id={auth} state={setDummy}/>
         <section class="ftco-section pt-2">
         <div class="alert alert-info mx-auto mt-5" style={{width: "50%", textAlign:"center"}} role="alert">
-            <h5 className="m-0">Total value of assets: </h5><h3>${assets}</h3>
+            <h5 className="m-0">Total value of assets: </h5><h3>${assets.toFixed(2)}</h3>
         </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -83,7 +83,7 @@ function Investments(){
                               </thead>
                               <tbody>
                                 {investments.map((investment, i) =>{
-                                    return (<ViewInvest assets = {setAssets} state = {setDummy} user_id={auth} index = {i} id={investment.invest_id} ticker = {investment.ticker} quantity={investment.quantity} date={investment.date.split('T')[0]} price={investment.price}/>)
+                                    return (<ViewInvest small={false} assets = {setAssets} state = {setDummy} user_id={auth} index = {i} id={investment.invest_id} ticker = {investment.ticker} quantity={investment.quantity} date={investment.date.split('T')[0]} price={investment.price}/>)
                                 })}
                             </tbody>
                             </table>
