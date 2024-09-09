@@ -13,4 +13,4 @@ Active investments are sorted by their date of purchase and can be sold from the
 Sold investments can be filtered on the portfolio page as the user can choose how far in their history they want to look by using an intuitive date picker and choosing to filter by sell date or purchase date. All sold investments that match this criteria are pulled and listed on the portfolio page.
 
 # Using Graphs to Visualize Data
-I utilized Chart.js so users can conveniently see their investment history, 
+I utilized Chart.js so users can conveniently see their investment history, creating a data-driven dashboard that makes seeing investment performance and history convenient.
